@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Modern Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="portfolio.css">
+    <link rel="stylesheet" href="carousel.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="logo">Fernandes N</h1>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" aria-label="Toggle dark/light mode">
+            <span class="theme-icon">🌙</span>
+        </button>
+
+         <button id="ai-assistant" aria-label="AI Assistant" onclick="alert('AI feature still under development...')">
+            <span class="ai-icon">🤖</span>
+        </button>
+
+    </header>
+
+    <main class="container">
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm an 18-year-old passionate developer creating modern web experiences and innovative solutions with clean code and thoughtful design.</p>
+                    <p>Specializing in JavaScript, React, and modern CSS frameworks to build responsive, accessible applications and solutions.</p>
+                </div>
+                </div>
+        </section>
+
+<section id="skills" class="section">
+    <h2>Skills</h2>
+    <div class="skills">
+        <span class="tag" style="--i: 1">JavaScript</span>
+        <span class="tag" style="--i: 2">HTML5 & CSS</span>
+        <span class="tag" style="--i: 3">Graphics Design</span>
+        <span class="tag" style="--i: 4">UI/UX Design</span>
+        <span class="tag" style="--i: 5">AI Prompt Engineering</span>
+        <span class="tag" style="--i: 6">IOT Applications</span>
+        <span class="tag" style="--i: 7">Arduino Basics</span>
+        <span class="tag" style="--i: 8">OSINT Investigations</span>
+        <span class="tag" style="--i: 9">Problem Solving Skills</span>
+    </div>
+
+    <section class="carousel">
+          <div class="slider" style="--quantity: 10;">
+
+<div class="item" style="--position: 1;">
+    <img src="myimages/htmllogo.jpeg" alt="HTML">
+    <div class="badge">HTML5</div>
+</div>
+
+<div class="item" style="--position: 2;">
+    <img src="myimages/csslogo.jpeg" alt="CSS">
+    <div class="badge">CSS3</div>
+</div>
+
+<div class="item" style="--position: 3;">
+    <img src="myimages/jslogo.png" alt="JavaScript">
+    <div class="badge">JavaScript</div>
+</div>
+
+<div class="item" style="--position: 4;">
+    <img src="myimages/uiux.jpg" alt="UI/UX Design">
+    <div class="badge">UI/UX Design</div>
+</div>
+
+<div class="item" style="--position: 5;">
+    <img src="myimages/ui-ux-designs.avif" alt="Graphics Design">
+    <div class="badge">Graphics Design</div>
+</div>
+
+<div class="item" style="--position: 6;">
+    <img src="myimages/ai.png" alt="AI Prompting">
+    <div class="badge">Prompt Engineering</div>
+</div>
+
+<div class="item" style="--position: 7;">
+    <img src="myimages/osint.jpg" alt="OSINT investigations">
+    <div class="badge">OSINT Investigations</div>
+</div>
+
+<div class="item" style="--position: 8;">
+    <img src="myimages/problem-solving-skills.jpg" alt="Problem Solving Skills">
+    <div class="badge">Problem Solving</div>
+</div>
+
+<div class="item" style="--position: 9;">
+    <img src="myimages/arduino.webp" alt="Arduino Portfolio">
+    <div class="badge">Arduino Basics</div>
+</div>
+
+<div class="item" style="--position: 10;">
+    <img src="myimages/iot.jpg" alt="IOT Applications">
+    <div class="badge">IOT </div>
+</div>
+
+</div>
+</section>
+</section>
+
+        <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="myimages/respos portfolio.png" alt="ResPos">
+                    </div>
+                    <div class="project-info">
+                        <h3>ResPos</h3>
+                        <p>A restaurant QR code ordering web application POS system built with modern web technologies.</p>
+                        <div class="project-status">
+                            <span class="status-text">Work in Progress</span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">tailwindcss</span>
+                            <span class="tag">vite</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="myimages/todolistapp.jpeg" alt="To-Do App">
+                    </div>
+                    <div class="project-info">
+                        <h3>To-Do App</h3>
+                        <p>A modern and minimalistic to-do application with real-time updates.</p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="myimages/rocpaperscissors.jpeg" alt="Rock Paper Scissors">
+                    </div>
+                    <div class="project-info">
+                        <h3>Rock Paper Scissors</h3>
+                        <p>A classic game user-friendly implementation.</p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>
+
+                   <div class="project-card">
+                    <div class="project-image">
+                        <img src="myimages/arduino portfolio.jpg" alt="Arduino Portfolio">
+                    </div>
+                    <div class="project-info">
+                        <h3>Smart plant irrigation system</h3>
+                        <p>A smart irrigation system for plants that uses sensors to monitor soil moisture and automatically water the plants when needed.</p>
+                        <div class="project-tags">
+                            <span class="tag">Arduino Uno</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">IoT applications</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Get In Touch</h2>
+            <form class="contact-form" action="https://formspree.io/f/mbgrpydq" method="POST">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="message" placeholder="Message" rows="5" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer class="footer">
+<div class="footer-inner">
+  <div class="footer-contact">
+    <h3>Contact</h3>
+    <br>
+<div class="footer-info">
+  <p><a href="mailto:lilfandy2.0@gmail.com"><i class="far fa-envelope"></i> lilfandy2.0@gmail.com</a></p>
+  <p><i class="fas fa-phone"></i> +254 737 844 190</p>
+  <p><a href="https://www.bing.com/maps/search?FORM=HDRSC6&style=r&q=Nairobi&ss=id.vdpid%3A8116144502579658754&cp=-1.288173%7E36.831172&lvl=14.2" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i> Location: Nairobi, Kenya</a></p>
+</div>
+  </div>
+  <div class="footer-copyright">
+    <p>&copy; 2026  All rights reserved.</p>
+  </div>
+</div>
+    </footer>
+
+    <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+</script>
+    <script src="portfolio.js"></script>
+</body>
+</html>
