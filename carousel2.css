@@ -1,0 +1,377 @@
+/* =========================================
+   3D SKILLS CAROUSEL
+========================================= */
+
+.carousel {
+    position: relative;
+
+    width: 100%;
+    height: 430px;
+
+    margin: 2rem 0;
+
+    perspective: 1200px;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    isolation: isolate;
+}
+
+
+/* =========================================
+   FADE EDGES
+========================================= */
+
+.carousel::before,
+.carousel::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 16%;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+.carousel::before {
+    left: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bg),
+            transparent
+        );
+}
+
+.carousel::after {
+    right: 0;
+
+    background:
+        linear-gradient(
+            270deg,
+            var(--bg),
+            transparent
+        );
+}
+
+
+/* =========================================
+   SLIDER
+========================================= */
+
+.slider {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 150px;
+    height: 190px;
+
+    transform:
+        translate(-50%, -50%);
+
+    transform-style: preserve-3d;
+
+    animation:
+        carouselRotate 28s linear infinite;
+
+    will-change: transform;
+}
+
+
+/* Pause rotation */
+
+.carousel:hover .slider {
+    animation-play-state: paused;
+}
+
+
+/* =========================================
+   CAROUSEL ITEM
+========================================= */
+
+.carousel-item {
+    position: absolute;
+
+    inset: 0;
+
+    width: 150px;
+    height: 190px;
+
+    padding: 8px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    transform:
+        rotateY(
+            calc((var(--position) - 1) * 36deg)
+        )
+        translateZ(280px);
+
+    transform-style: preserve-3d;
+
+    backface-visibility: hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.carousel-item img {
+    width: 100%;
+    height: 145px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
+}
+
+
+/* Hover image */
+
+.carousel-item:hover img {
+    transform: scale(1.05);
+
+    filter: brightness(1.05);
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.carousel-item span {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    color: var(--text);
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   ITEM HOVER
+========================================= */
+
+.carousel-item:hover {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(0, 170, 255, 0.08);
+}
+
+
+/* =========================================
+   ROTATION
+========================================= */
+
+@keyframes carouselRotate {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotateY(0deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotateY(360deg);
+    }
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .carousel {
+        height: 370px;
+
+        perspective: 1000px;
+    }
+
+    .slider {
+        width: 130px;
+        height: 170px;
+    }
+
+    .carousel-item {
+        width: 130px;
+        height: 170px;
+
+        transform:
+            rotateY(
+                calc((var(--position) - 1) * 36deg)
+            )
+            translateZ(235px);
+    }
+
+    .carousel-item img {
+        height: 128px;
+    }
+
+    .carousel-item span {
+        font-size: 0.68rem;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .carousel {
+        height: 310px;
+
+        perspective: 750px;
+    }
+
+    .slider {
+        width: 100px;
+        height: 140px;
+    }
+
+    .carousel-item {
+        width: 100px;
+        height: 140px;
+
+        padding: 6px;
+
+        border-radius: 13px;
+
+        transform:
+            rotateY(
+                calc((var(--position) - 1) * 36deg)
+            )
+            translateZ(175px);
+    }
+
+    .carousel-item img {
+        height: 105px;
+
+        border-radius: 8px;
+    }
+
+    .carousel-item span {
+        margin-top: 5px;
+
+        font-size: 0.58rem;
+    }
+
+    .carousel::before,
+    .carousel::after {
+        width: 10%;
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 400px) {
+
+    .carousel {
+        height: 280px;
+
+        perspective: 650px;
+    }
+
+    .slider {
+        width: 85px;
+        height: 120px;
+    }
+
+    .carousel-item {
+        width: 85px;
+        height: 120px;
+
+        transform:
+            rotateY(
+                calc((var(--position) - 1) * 36deg)
+            )
+            translateZ(150px);
+    }
+
+    .carousel-item img {
+        height: 90px;
+    }
+
+    .carousel-item span {
+        font-size: 0.52rem;
+    }
+
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .slider {
+        animation: none;
+    }
+
+    .carousel-item,
+    .carousel-item img {
+        transition: none;
+    }
+
+}
