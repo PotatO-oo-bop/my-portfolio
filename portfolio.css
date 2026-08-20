@@ -45,7 +45,11 @@ header {
     width: 100%;
     top: 0;
     z-index: 100;
-    background: rgba(10, 10, 10, 0.8);
+     background: color-mix(
+        in srgb,
+        var(--bg) 85%,
+        transparent
+    );
     backdrop-filter: blur(10px);
 }
 
