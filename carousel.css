@@ -1,0 +1,156 @@
+/* =========================
+   3D SKILLS CAROUSEL
+========================= */
+
+.carousel {
+    position: relative;
+
+    width: 100%;
+    height: 430px;
+
+    perspective: 1200px;
+
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+}
+
+.slider {
+    position: relative;
+
+    width: 150px;
+    height: 150px;
+
+    transform-style: preserve-3d;
+
+    animation:
+        carouselRotate 28s linear infinite;
+}
+
+.carousel:hover .slider {
+    animation-play-state: paused;
+}
+
+.carousel-item {
+    position: absolute;
+
+    inset: 0;
+
+    width: 150px;
+    height: 150px;
+
+    transform:
+        rotateY(calc(var(--position) * 36deg))
+        translateZ(280px);
+
+    transform-style: preserve-3d;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.3s ease;
+}
+
+.carousel-item span {
+    position: absolute;
+
+    left: 50%;
+    bottom: 10px;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+
+    padding: 0.3rem 0.65rem;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    backdrop-filter: blur(5px);
+
+    color: white;
+
+    border-radius: 50px;
+
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+@keyframes carouselRotate {
+
+    from {
+        transform:
+            rotateY(0deg);
+    }
+
+    to {
+        transform:
+            rotateY(360deg);
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .carousel {
+        height: 350px;
+
+        perspective: 900px;
+    }
+
+    .slider,
+    .carousel-item {
+        width: 120px;
+        height: 120px;
+    }
+
+    .carousel-item {
+        transform:
+            rotateY(calc(var(--position) * 36deg))
+            translateZ(220px);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .carousel {
+        height: 300px;
+
+        perspective: 700px;
+    }
+
+    .slider,
+    .carousel-item {
+        width: 95px;
+        height: 95px;
+    }
+
+    .carousel-item {
+        transform:
+            rotateY(calc(var(--position) * 36deg))
+            translateZ(165px);
+    }
+
+    .carousel-item span {
+        font-size: 0.55rem;
+    }
+
+}

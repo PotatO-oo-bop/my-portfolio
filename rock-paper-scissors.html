@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #101114;
+    --panel: #181a1f;
+    --panel-2: #20232a;
+    --border: #30343d;
+    --text: #f5f5f5;
+    --muted: #9297a3;
+    --accent: #7c5cff;
+    --accent-hover: #9277ff;
+    --green: #38d996;
+    --red: #ff5d6c;
+    --yellow: #ffc857;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% -20%, #252039 0, transparent 45%),
+        var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 35px 16px;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   PLAYER SETUP
+========================= */
+
+.setup {
+    width: min(460px, 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.setup-card {
+    width: 100%;
+    background: rgba(24, 26, 31, .94);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 35px 28px;
+    text-align: center;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .35);
+}
+
+.setup-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--panel-2);
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+    border: 1px solid var(--border);
+}
+
+.setup-card h1 {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+    letter-spacing: -1.5px;
+    margin-bottom: 8px;
+}
+
+.setup-card p {
+    color: var(--muted);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.name-input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text);
+    outline: none;
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    transition: .2s;
+}
+
+.name-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, .12);
+}
+
+.start-btn {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 11px;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.start-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   GAME
+========================= */
+
+.game {
+    width: min(720px, 100%);
+}
+
+.top {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.top h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    letter-spacing: -1.5px;
+    margin-bottom: 7px;
+}
+
+.top p {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.player-heading {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* =========================
+   SCORE
+========================= */
+
+.scoreboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: rgba(24, 26, 31, .9);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.score {
+    text-align: center;
+    padding: 18px 10px;
+    border-right: 1px solid var(--border);
+}
+
+.score:last-child {
+    border-right: none;
+}
+
+.score span {
+    display: block;
+    color: var(--muted);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.score strong {
+    font-size: 1.8rem;
+}
+
+/* =========================
+   ARENA
+========================= */
+
+.arena {
+    background: rgba(24, 26, 31, .92);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 18px;
+}
+
+.versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.player {
+    text-align: center;
+}
+
+.player-name {
+    color: var(--muted);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.choice-display {
+    width: 105px;
+    height: 105px;
+    margin: auto;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--panel-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.4rem;
+    transition: .25s ease;
+}
+
+.choice-display.pop {
+    animation: pop .35s ease;
+}
+
+.vs {
+    color: #555b66;
+    font-size: .8rem;
+    font-weight: 800;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(.7);
+    }
+
+    70% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.result {
+    text-align: center;
+    min-height: 58px;
+    margin-top: 25px;
+}
+
+.result-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.result-subtitle {
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.win {
+    color: var(--green);
+}
+
+.lose {
+    color: var(--red);
+}
+
+.draw {
+    color: var(--yellow);
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls {
+    background: rgba(24, 26, 31, .92);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 22px;
+}
+
+.controls-title {
+    text-align: center;
+    color: var(--muted);
+    font-size: .8rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.choice-btn {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text);
+    font-size: 3rem;
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.choice-btn:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+    background: #252331;
+    box-shadow: 0 10px 25px rgba(124, 92, 255, .16);
+}
+
+.choice-btn:active {
+    transform: scale(.92);
+}
+
+.choice-btn:focus-visible,
+.action-btn:focus-visible,
+.change-player:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-btn,
+.change-player {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    padding: 9px 15px;
+    border-radius: 9px;
+    transition: .2s;
+}
+
+.action-btn:hover,
+.change-player:hover {
+    color: var(--text);
+    border-color: #555b66;
+    background: var(--panel-2);
+}
+
+.action-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.change-player {
+    margin-top: 10px;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history {
+    margin-top: 18px;
+    background: rgba(24, 26, 31, .75);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 15px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.history-header strong {
+    font-size: .85rem;
+}
+
+.history-header span {
+    color: var(--muted);
+    font-size: .75rem;
+}
+
+.history-list {
+    display: flex;
+    gap: 7px;
+    min-height: 30px;
+    flex-wrap: wrap;
+}
+
+.history-item {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--panel-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.history-item.win {
+    border: 1px solid rgba(56, 217, 150, .4);
+}
+
+.history-item.lose {
+    border: 1px solid rgba(255, 93, 108, .4);
+}
+
+.history-item.draw {
+    border: 1px solid rgba(255, 200, 87, .4);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    color: #555a64;
+    font-size: .75rem;
+    margin-top: 20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+
+    body {
+        padding: 22px 12px;
+    }
+
+    .setup-card {
+        padding: 30px 20px;
+    }
+
+    .arena,
+    .controls {
+        padding: 18px 14px;
+    }
+
+    .choice-display {
+        width: 80px;
+        height: 80px;
+        font-size: 2.6rem;
+    }
+
+    .choice-btn {
+        width: 82px;
+        height: 82px;
+        font-size: 2.4rem;
+    }
+
+    .choices {
+        gap: 9px;
+    }
+
+    .versus {
+        gap: 8px;
+    }
+
+    .vs {
+        font-size: .7rem;
+    }
+
+    .player-name {
+        max-width: 95px;
+        margin-inline: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     PLAYER SETUP
+========================= -->
+
+<section id="setup" class="setup">
+
+    <div class="setup-card">
+
+        <div class="setup-icon">🎮</div>
+
+        <h1>Ready?</h1>
+
+        <p>
+            Enter your name and let's see what you've got.
+        </p>
+
+        <form id="nameForm">
+
+            <input
+                id="nameInput"
+                class="name-input"
+                type="text"
+                placeholder="Enter your name"
+                maxlength="20"
+                autocomplete="off"
+                required
+            >
+
+            <button class="start-btn" type="submit">
+                Start Game
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     GAME
+========================= -->
+
+<main id="game" class="game hidden">
+
+    <header class="top">
+
+        <h1>Rock Paper Scissors</h1>
+
+        <p>
+            <span id="playerHeading" class="player-heading"></span>
+            vs AI 💀
+        </p>
+
+    </header>
+
+
+    <section class="scoreboard" aria-label="Game score">
+
+        <div class="score">
+            <span>Wins</span>
+            <strong id="wins">0</strong>
+        </div>
+
+        <div class="score">
+            <span>Draws</span>
+            <strong id="draws">0</strong>
+        </div>
+
+        <div class="score">
+            <span>Losses</span>
+            <strong id="losses">0</strong>
+        </div>
+
+    </section>
+
+
+    <section class="arena">
+
+        <div class="versus">
+
+            <div class="player">
+
+                <div
+                    id="playerName"
+                    class="player-name"
+                >
+                    You
+                </div>
+
+                <div
+                    id="playerChoice"
+                    class="choice-display"
+                    aria-label="Your choice"
+                >
+                    ❔
+                </div>
+
+            </div>
+
+
+            <div class="vs">VS</div>
+
+
+            <div class="player">
+
+                <div class="player-name">
+                    AI 💀
+                </div>
+
+                <div
+                    id="computerChoice"
+                    class="choice-display"
+                    aria-label="Computer choice"
+                >
+                    ❔
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="result">
+
+            <div
+                id="resultTitle"
+                class="result-title"
+            >
+                Make your move
+            </div>
+
+            <div
+                id="resultSubtitle"
+                class="result-subtitle"
+            >
+                Rock, paper or scissors?
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="controls">
+
+        <div class="controls-title">
+            Choose your weapon
+        </div>
+
+
+        <div class="choices">
+
+            <button
+                class="choice-btn"
+                data-choice="rock"
+                aria-label="Choose rock"
+            >
+                ✊
+            </button>
+
+            <button
+                class="choice-btn"
+                data-choice="paper"
+                aria-label="Choose paper"
+            >
+                ✋
+            </button>
+
+            <button
+                class="choice-btn"
+                data-choice="scissors"
+                aria-label="Choose scissors"
+            >
+                ✌️
+            </button>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                id="autoPlay"
+                class="action-btn"
+                type="button"
+            >
+                ▶ Auto Play
+            </button>
+
+            <button
+                id="reset"
+                class="action-btn"
+                type="button"
+            >
+                ↻ Reset
+            </button>
+
+        </div>
+
+
+        <div style="text-align:center">
+
+            <button
+                id="changePlayer"
+                class="change-player"
+                type="button"
+            >
+                👤 Change Player
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="history">
+
+        <div class="history-header">
+
+            <strong>Recent rounds</strong>
+
+            <span id="roundCount">
+                0 rounds
+            </span>
+
+        </div>
+
+        <div
+            id="historyList"
+            class="history-list"
+        ></div>
+
+    </section>
+
+
+    <footer>
+        Built with HTML, CSS, JavaScript & lots of coffee...
+    </footer>
+
+</main>
+
+
+<script>
+/* =========================
+   GAME DATA
+========================= */
+
+const choices = {
+    rock: "✊",
+    paper: "✋",
+    scissors: "✌️"
+};
+
+let wins = 0;
+let losses = 0;
+let draws = 0;
+
+let autoPlaying = false;
+let autoInterval = null;
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const setup = document.getElementById("setup");
+const game = document.getElementById("game");
+
+const nameForm = document.getElementById("nameForm");
+const nameInput = document.getElementById("nameInput");
+
+const playerNameEl = document.getElementById("playerName");
+const playerHeading = document.getElementById("playerHeading");
+
+const winsEl = document.getElementById("wins");
+const lossesEl = document.getElementById("losses");
+const drawsEl = document.getElementById("draws");
+
+const playerEl = document.getElementById("playerChoice");
+const computerEl = document.getElementById("computerChoice");
+
+const resultTitle = document.getElementById("resultTitle");
+const resultSubtitle = document.getElementById("resultSubtitle");
+
+const historyList = document.getElementById("historyList");
+const roundCount = document.getElementById("roundCount");
+
+const autoButton = document.getElementById("autoPlay");
+const resetButton = document.getElementById("reset");
+const changePlayerButton =
+    document.getElementById("changePlayer");
+
+
+/* =========================
+   PLAYER SESSION
+========================= */
+
+const SESSION_KEY = "rps-player-name";
+
+
+function showGame(name) {
+
+    playerNameEl.textContent = name;
+    playerHeading.textContent = name;
+
+    setup.classList.add("hidden");
+    game.classList.remove("hidden");
+
+}
+
+
+function showSetup() {
+
+    stopAutoPlay();
+
+    game.classList.add("hidden");
+    setup.classList.remove("hidden");
+
+    nameInput.value = "";
+    nameInput.focus();
+
+}
+
+
+function savePlayer(name) {
+
+    const cleanName = name.trim();
+
+    if (!cleanName) return;
+
+    sessionStorage.setItem(
+        SESSION_KEY,
+        cleanName
+    );
+
+    showGame(cleanName);
+
+}
+
+
+nameForm.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    savePlayer(nameInput.value);
+
+});
+
+
+changePlayerButton.addEventListener("click", () => {
+
+    sessionStorage.removeItem(SESSION_KEY);
+
+    resetGame();
+
+    showSetup();
+
+});
+
+
+/* =========================
+   RESTORE SESSION
+========================= */
+
+const savedPlayer =
+    sessionStorage.getItem(SESSION_KEY);
+
+if (savedPlayer) {
+
+    showGame(savedPlayer);
+
+} else {
+
+    setup.classList.remove("hidden");
+    game.classList.add("hidden");
+
+}
+
+
+/* =========================
+   COMPUTER MOVE
+========================= */
+
+function computerMove() {
+
+    const options = [
+        "rock",
+        "paper",
+        "scissors"
+    ];
+
+    return options[
+        Math.floor(
+            Math.random() * options.length
+        )
+    ];
+
+}
+
+
+/* =========================
+   WINNER
+========================= */
+
+function determineWinner(player, computer) {
+
+    if (player === computer) {
+        return "draw";
+    }
+
+    if (
+        (player === "rock" &&
+            computer === "scissors") ||
+
+        (player === "paper" &&
+            computer === "rock") ||
+
+        (player === "scissors" &&
+            computer === "paper")
+    ) {
+        return "win";
+    }
+
+    return "lose";
+
+}
+
+
+/* =========================
+   PLAY
+========================= */
+
+function play(player) {
+
+    const computer = computerMove();
+
+    const result =
+        determineWinner(
+            player,
+            computer
+        );
+
+
+    playerEl.textContent =
+        choices[player];
+
+    computerEl.textContent =
+        choices[computer];
+
+
+    playerEl.classList.remove("pop");
+    computerEl.classList.remove("pop");
+
+    void playerEl.offsetWidth;
+
+    playerEl.classList.add("pop");
+    computerEl.classList.add("pop");
+
+
+    resultTitle.className =
+        "result-title";
+
+
+    if (result === "win") {
+
+        wins++;
+
+        resultTitle.textContent =
+            `${getPlayerName()} wins! 🎉`;
+
+        resultSubtitle.textContent =
+            `${choices[player]} beats ${choices[computer]}`;
+
+        resultTitle.classList.add("win");
+
+    }
+
+
+    else if (result === "lose") {
+
+        losses++;
+
+        resultTitle.textContent =
+            "AI wins 😭";
+
+        resultSubtitle.textContent =
+            `${choices[computer]} beats ${choices[player]}`;
+
+        resultTitle.classList.add("lose");
+
+    }
+
+
+    else {
+
+        draws++;
+
+        resultTitle.textContent =
+            "It's a draw 🤝";
+
+        resultSubtitle.textContent =
+            "You both picked the same move.";
+
+        resultTitle.classList.add("draw");
+
+    }
+
+
+    updateScore();
+
+    addHistory(
+        player,
+        computer,
+        result
+    );
+
+}
+
+
+/* =========================
+   PLAYER NAME
+========================= */
+
+function getPlayerName() {
+
+    return (
+        sessionStorage.getItem(
+            SESSION_KEY
+        ) || "You"
+    );
+
+}
+
+
+/* =========================
+   SCORE
+========================= */
+
+function updateScore() {
+
+    winsEl.textContent = wins;
+    lossesEl.textContent = losses;
+    drawsEl.textContent = draws;
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function addHistory(
+    player,
+    computer,
+    result
+) {
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        `history-item ${result}`;
+
+    item.textContent =
+        choices[player];
+
+    item.title =
+        `${getPlayerName()}: ${player} | AI: ${computer}`;
+
+    historyList.prepend(item);
+
+
+    while (
+        historyList.children.length > 12
+    ) {
+
+        historyList.lastChild.remove();
+
+    }
+
+
+    const total =
+        wins + losses + draws;
+
+    roundCount.textContent =
+        `${total} ${
+            total === 1
+                ? "round"
+                : "rounds"
+        }`;
+
+}
+
+
+/* =========================
+   RESET GAME
+========================= */
+
+function resetGame() {
+
+    stopAutoPlay();
+
+    wins = 0;
+    losses = 0;
+    draws = 0;
+
+    updateScore();
+
+    playerEl.textContent = "❔";
+    computerEl.textContent = "❔";
+
+    resultTitle.textContent =
+        "Make your move";
+
+    resultTitle.className =
+        "result-title";
+
+    resultSubtitle.textContent =
+        "Rock, paper or scissors?";
+
+    historyList.innerHTML = "";
+
+    roundCount.textContent =
+        "0 rounds";
+
+}
+
+
+/* =========================
+   AUTO PLAY
+========================= */
+
+function startAutoPlay() {
+
+    autoPlaying = true;
+
+    autoButton.classList.add("active");
+
+    autoButton.textContent =
+        "■ Stop Auto";
+
+
+    autoInterval = setInterval(() => {
+
+        const options = [
+            "rock",
+            "paper",
+            "scissors"
+        ];
+
+        const move =
+            options[
+                Math.floor(
+                    Math.random() * 3
+                )
+            ];
+
+        play(move);
+
+    }, 900);
+
+}
+
+
+function stopAutoPlay() {
+
+    autoPlaying = false;
+
+    autoButton.classList.remove("active");
+
+    autoButton.textContent =
+        "▶ Auto Play";
+
+
+    if (autoInterval) {
+
+        clearInterval(autoInterval);
+
+        autoInterval = null;
+
+    }
+
+}
+
+
+function toggleAutoPlay() {
+
+    if (autoPlaying) {
+
+        stopAutoPlay();
+
+    } else {
+
+        startAutoPlay();
+
+    }
+
+}
+
+
+/* =========================
+   BUTTON EVENTS
+========================= */
+
+document
+    .querySelectorAll(".choice-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                if (!autoPlaying) {
+
+                    play(
+                        button.dataset.choice
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+
+autoButton.addEventListener(
+    "click",
+    toggleAutoPlay
+);
+
+
+resetButton.addEventListener(
+    "click",
+    resetGame
+);
+
+
+/* =========================
+   KEYBOARD CONTROLS
+========================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            game.classList.contains("hidden")
+        ) {
+            return;
+        }
+
+
+        if (
+            event.target.tagName === "INPUT"
+        ) {
+            return;
+        }
+
+
+        const key =
+            event.key.toLowerCase();
+
+
+        if (key === "r") {
+
+            if (!autoPlaying) {
+                play("rock");
+            }
+
+        }
+
+
+        if (key === "p") {
+
+            if (!autoPlaying) {
+                play("paper");
+            }
+
+        }
+
+
+        if (key === "s") {
+
+            if (!autoPlaying) {
+                play("scissors");
+            }
+
+        }
+
+
+        if (key === "a") {
+
+            toggleAutoPlay();
+
+        }
+
+    }
+);
+</script>
+
+</body>
+</html>
