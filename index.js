@@ -256,7 +256,7 @@ themeToggle?.addEventListener("click", () => {
 
     /* =========================================
        AI RESPONSE ENGINE
-    ========================================= */
+    ========================================= 
 
     function addMessage(
         text,
@@ -292,7 +292,14 @@ themeToggle?.addEventListener("click", () => {
         if (
             q.includes("skill") ||
             q.includes("technology") ||
-            q.includes("tech")
+            q.includes("tech")||
+            q.includes("expertise") ||
+            q.includes("ability") ||
+            q.includes("competence") ||
+            q.includes("Knowledge") ||
+            q.includes("experience") ||
+            q.includes("proficient") ||
+            q.includes("familiar")
         ) {
 
             return "Fernandes works with JavaScript, HTML, CSS, UI/UX design, graphics design, AI prompting, IoT, Arduino, OSINT and problem solving.";
@@ -314,7 +321,9 @@ themeToggle?.addEventListener("click", () => {
         if (
             q.includes("contact") ||
             q.includes("email") ||
-            q.includes("hire")
+            q.includes("hire")||
+            q.includes("reach")||
+            q.includes("message")
         ) {
 
             return "You can contact Fernandes through the contact form or email him directly at lilfandy2.0@gmail.com.";
@@ -346,7 +355,11 @@ themeToggle?.addEventListener("click", () => {
         if (
             q.includes("hello") ||
             q.includes("hi") ||
-            q.includes("hey")
+            q.includes("hey")||
+            q.includes("yo") ||
+            q.includes("greetings") ||
+            q.includes("sup") ||
+            q.includes("what's up")
         ) {
 
             return "Hey! Ask me about Fernandes' skills, projects, experience or contact information.";
@@ -394,9 +407,9 @@ themeToggle?.addEventListener("click", () => {
     );
 
 
-    /* =========================================
+     =========================================
        AI SUGGESTIONS
-    ========================================= */
+    ========================================= 
 
     document
         .querySelectorAll(
@@ -436,7 +449,7 @@ themeToggle?.addEventListener("click", () => {
         });
 
 
-    /* =========================================
+     =========================================
        ESCAPE KEY
     ========================================= */
 
@@ -460,3 +473,174 @@ themeToggle?.addEventListener("click", () => {
     );
 
 });
+
+
+
+/* =========================================
+   PHILOSOPHY SLIDESHOW
+========================================= */
+
+const philosophyTrack =
+    document.querySelector(".philosophy-track");
+
+const philosophyCards =
+    document.querySelectorAll(".philosophy-card");
+
+const philosophyDots =
+    document.querySelectorAll(".philosophy-dot");
+
+const philosophyPrev =
+    document.querySelector(".philosophy-prev");
+
+const philosophyNext =
+    document.querySelector(".philosophy-next");
+
+let philosophyIndex = 0;
+
+let philosophyTimer;
+
+
+function showPhilosophy(index) {
+
+    if (!philosophyTrack || !philosophyCards.length) {
+        return;
+    }
+
+    philosophyIndex =
+        (index + philosophyCards.length)
+        % philosophyCards.length;
+
+    philosophyTrack.style.transform =
+        `translateX(-${philosophyIndex * 100}%)`;
+
+
+    philosophyDots.forEach(
+        (dot, i) => {
+
+            dot.classList.toggle(
+                "active",
+                i === philosophyIndex
+            );
+
+        }
+    );
+
+}
+
+
+function nextPhilosophy() {
+    showPhilosophy(
+        philosophyIndex + 1
+    );
+}
+
+
+function previousPhilosophy() {
+    showPhilosophy(
+        philosophyIndex - 1
+    );
+}
+
+
+/* Buttons */
+
+philosophyNext?.addEventListener(
+    "click",
+    () => {
+
+        nextPhilosophy();
+
+        restartPhilosophyTimer();
+
+    }
+);
+
+
+philosophyPrev?.addEventListener(
+    "click",
+    () => {
+
+        previousPhilosophy();
+
+        restartPhilosophyTimer();
+
+    }
+);
+
+
+/* Dots */
+
+philosophyDots.forEach(
+    dot => {
+
+        dot.addEventListener(
+            "click",
+            () => {
+
+                showPhilosophy(
+                    Number(dot.dataset.slide)
+                );
+
+                restartPhilosophyTimer();
+
+            }
+        );
+
+    }
+);
+
+
+/* Auto slide */
+
+function startPhilosophyTimer() {
+
+    philosophyTimer =
+        setInterval(
+            nextPhilosophy,
+            5000
+        );
+
+}
+
+
+function restartPhilosophyTimer() {
+
+    clearInterval(
+        philosophyTimer
+    );
+
+    startPhilosophyTimer();
+
+}
+
+
+startPhilosophyTimer();
+
+
+/* Pause while hovering */
+
+const philosophyViewport =
+    document.querySelector(
+        ".philosophy-viewport"
+    );
+
+philosophyViewport?.addEventListener(
+    "mouseenter",
+    () => {
+
+        clearInterval(
+            philosophyTimer
+        );
+
+    }
+);
+
+
+philosophyViewport?.addEventListener(
+    "mouseleave",
+    () => {
+
+        startPhilosophyTimer();
+
+    }
+);
