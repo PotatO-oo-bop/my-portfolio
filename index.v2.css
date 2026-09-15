@@ -11,6 +11,8 @@
     --header-bg: rgba(8, 9, 11, 0.78);
     --input-bg: #101216;
     --shadow: rgba(0, 0, 0, 0.35);
+    --transition-fast: 0.25s ease;
+    --transition-medium: 0.35s ease;
 }
 
 [data-theme="light"] {
@@ -137,7 +139,7 @@ button {
     text-transform: uppercase;
     letter-spacing: 1px;
 
-    transition: color 0.25s ease;
+    transition: color var(--transition-fast);
 }
 
 .nav-link:hover {
@@ -153,24 +155,30 @@ button {
     gap: 0.5rem;
 }
 
-.icon-button {
-    width: 40px;
-    height: 40px;
-
+.icon-button,
+.hero-socials a,
+.footer-socials a {
     display: grid;
     place-items: center;
 
     border: 1px solid var(--border);
+
+    transition:
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.icon-button {
+    width: 40px;
+    height: 40px;
+
     border-radius: 9px;
 
     background: var(--card);
     color: var(--text);
-
-    transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        color 0.25s ease,
-        border-color 0.25s ease;
 }
 
 .icon-button:hover {
@@ -339,20 +347,11 @@ button {
     width: 38px;
     height: 38px;
 
-    display: grid;
-    place-items: center;
-
-    border: 1px solid var(--border);
     border-radius: 50%;
 
     color: var(--text-muted);
 
     text-decoration: none;
-
-    transition:
-        color 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease;
 }
 
 .hero-socials a:hover {
@@ -361,6 +360,24 @@ button {
 
     transform: translateY(-3px);
 }
+
+
+/*Chameleon Color effects*/
+
+.chameleon-text{
+    animation: chameleonColor 6s ease-in-out infinite;
+    transition: color 0.5s ease;
+}
+
+@keyframes chameleonColor {
+    0%   { color: #38BDF8; } /* Sky Blue */
+    20%  { color: #22D3EE; } /* Cyan */
+    40%  { color: #2DD4BF; } /* Teal */
+    60%  { color: #4ADE80; } /* Green */
+    80%  { color: #A78BFA; } /* Purple */
+    100% { color: #38BDF8; } /* Sky Blue */
+}
+
 
 
 /* ========================= HERO CODE CARD ========================= */
@@ -1045,7 +1062,7 @@ button {
 
     .philosophy-next {
         right: 10px;
-      
+
     }
 
     .philosophy-card {
@@ -1276,7 +1293,7 @@ button {
     border-radius: 50px;
 
     background: rgba(6, 161, 63, 0.9);
-   
+
 
     color: white;
 
@@ -1343,6 +1360,15 @@ button {
     gap: 0.6rem;
 }
 
+.project-btn,
+.ai-suggestions button {
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
 .project-btn {
     display: inline-flex;
 
@@ -1363,11 +1389,6 @@ button {
 
     font-size: 0.75rem;
     font-weight: 700;
-
-    transition:
-        color 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
 }
 
 .project-btn:hover {
@@ -1388,6 +1409,44 @@ button {
     background: var(--accent-hover);
 
     color: white;
+}
+
+.project-btn.disabled {
+    pointer-events: none;
+    opacity: 0.8;
+    cursor: not-allowed;
+    background: rgba(148, 163, 184, 0.12);
+    border-color: var(--border);
+    color: var(--text-muted);
+}
+
+.project-btn.disabled:hover {
+    color: var(--text-muted);
+    border-color: var(--border);
+    background: rgba(148, 163, 184, 0.12);
+}
+
+.toast {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 3000;
+    max-width: min(360px, calc(100vw - 2rem));
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: rgba(16, 18, 22, 0.96);
+    color: var(--text);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
 }
 
 
@@ -1503,21 +1562,11 @@ button {
     width: 40px;
     height: 40px;
 
-    display: grid;
-    place-items: center;
-
-    border: 1px solid var(--border);
-
     border-radius: 50%;
 
     color: var(--text-muted);
 
     text-decoration: none;
-
-    transition:
-        color 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease;
 }
 
 .footer-socials a:hover {

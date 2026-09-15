@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://potato-oo-bop.github.io/my-portfolio/sitemap.xml

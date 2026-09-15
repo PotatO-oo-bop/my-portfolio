@@ -1,4 +1,114 @@
+function showToast(message) {
+    const toast = document.getElementById("toast");
+
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+
+    window.clearTimeout(showToast.timer);
+    showToast.timer = window.setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 2200);
+}
+
+const projects = [
+    {
+        title: "Restaurant Management App",
+        description: "A restaurant QR-code ordering and POS platform designed to simplify restaurant operations.",
+        image: "myimages/respos portfolio.png",
+        alt: "ResPos restaurant POS",
+        tags: ["Laravel", "PHP", "MySQL", "JavaScript", "Vite"],
+        status: "In Progress",
+        href: "#",
+        buttonText: "Coming soon",
+        buttonIcon: "fa-clock",
+        disabled: true
+    },
+    {
+        title: "Todo list App",
+        description: "A clean productivity app for managing daily tasks with a simple modern interface and unorthodox approach & philosophy.",
+        image: "myimages/tdapp.jpeg",
+        alt: "To-do application",
+        tags: ["HTML5", "CSS3", "JavaScript"],
+        href: "todo.html",
+        buttonText: "Live Demo",
+        buttonIcon: "fa-arrow-up-right-from-square",
+        disabled: false
+    },
+    {
+        title: "Cvnalyser",
+        description: "CV Analyser is a recruitment-support webapp. Recruiters enter a job's requirements, upload a batch of PDF CVs, and receive AI-assisted candidate assessments, ranking and recommendation without bias.",
+        image: "myimages/rp.jpeg",
+        alt: "Cvnalyser project",
+        tags: ["JavaScript", "HTML5", "CSS3", "NodeJS"],
+        href: "#",
+        buttonText: "Coming soon",
+        buttonIcon: "fa-clock",
+        disabled: true
+    },
+    {
+        title: "Rock Paper Scissors",
+        description: "A browser-based implementation of the classic game with an interactive user interface.",
+        image: "myimages/rps.jpeg",
+        alt: "Rock Paper Scissors game",
+        tags: ["JavaScript", "HTML5", "CSS3"],
+        href: "rock-paper-scissors.html",
+        buttonText: "Live Demo",
+        buttonIcon: "fa-arrow-up-right-from-square",
+        disabled: false
+    },
+    {
+        title: "Smart Irrigation System",
+        description: "An automated plant irrigation system using soil moisture sensors and Arduino to control water delivery.",
+        image: "myimages/arduino portfolio.jpg",
+        alt: "Smart plant irrigation system",
+        tags: ["Arduino", "C++", "IoT"],
+        href: "#",
+        buttonText: "Details",
+        buttonIcon: "fa-arrow-right",
+        disabled: true
+    }
+];
+
+function renderProjects() {
+    const container = document.getElementById("projects-grid");
+
+    if (!container) return;
+
+    container.innerHTML = projects.map(project => `
+        <article class="project-card">
+            <div class="project-image">
+                <img src="${project.image}" alt="${project.alt}">
+                ${project.status ? `<span class="project-status">${project.status}</span>` : ""}
+            </div>
+
+            <div class="project-info">
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
+
+                <div class="project-tags">
+                    ${project.tags.map(tag => `<span>${tag}</span>`).join("")}
+                </div>
+
+                <div class="project-actions">
+                    <a
+                        href="${project.href}"
+                        class="project-btn project-btn-primary ${project.disabled ? "disabled" : ""}"
+                        ${project.disabled ? 'aria-disabled="true" onclick="return false;"' : 'target="_blank"'}
+                    >
+                        ${project.buttonText}
+                        <i class="fas ${project.buttonIcon}"></i>
+                    </a>
+                </div>
+            </div>
+        </article>
+    `).join("");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    renderProjects();
+
 /* =========================================
    THEME SYSTEM
 ========================================= */
@@ -283,92 +393,49 @@ themeToggle?.addEventListener("click", () => {
     }
 
 
+    const aiRules = [
+        {
+            keywords: [
+                "skill", "skills", "technology", "technologies", "tech",
+                "expertise", "ability", "competence", "knowledge",
+                "experience", "proficient", "familiar"
+            ],
+            response: "Fernandes works with JavaScript, HTML, CSS, UI/UX design, graphics design, AI prompting, IoT, Arduino, OSINT and practical problem solving."
+        },
+        {
+            keywords: ["project", "projects", "built", "work", "portfolio"],
+            response: "Current portfolio projects include ResPos, a minimalist Todo application, Rock Paper Scissors, and a smart Arduino-based plant irrigation system."
+        },
+        {
+            keywords: ["contact", "email", "hire", "reach", "message"],
+            response: "You can contact Fernandes through the contact form or email him directly at lilfandy2.0@gmail.com."
+        },
+        {
+            keywords: ["who", "about", "fernandes"],
+            response: "Fernandes is a developer and creative problem solver interested in web development, design, AI, IoT and practical technology solutions."
+        },
+        {
+            keywords: ["location", "where"],
+            response: "Fernandes is based in Nairobi, Kenya."
+        },
+        {
+            keywords: ["hello", "hi", "hey", "yo", "greetings", "sup", "what's up"],
+            response: "Hey! Ask me about Fernandes' skills, projects, experience or contact information."
+        }
+    ];
+
     function getAIResponse(question) {
+        const q = question.toLowerCase().trim();
 
-        const q =
-            question.toLowerCase();
-
-
-        if (
-            q.includes("skill") ||
-            q.includes("technology") ||
-            q.includes("tech")||
-            q.includes("expertise") ||
-            q.includes("ability") ||
-            q.includes("competence") ||
-            q.includes("Knowledge") ||
-            q.includes("experience") ||
-            q.includes("proficient") ||
-            q.includes("familiar")
-        ) {
-
-            return "Fernandes works with JavaScript, HTML, CSS, UI/UX design, graphics design, AI prompting, IoT, Arduino, OSINT and problem solving.";
-
+        if (!q) {
+            return "I can currently answer questions about Fernandes, his skills, projects, technologies, location and contact information.";
         }
 
+        const matchedRule = aiRules.find(rule =>
+            rule.keywords.some(keyword => q.includes(keyword))
+        );
 
-        if (
-            q.includes("project") ||
-            q.includes("built") ||
-            q.includes("work")
-        ) {
-
-            return "Current portfolio projects include ResPos, a minimalist Todo application, Rock Paper Scissors and a smart Arduino-based plant irrigation system.";
-
-        }
-
-
-        if (
-            q.includes("contact") ||
-            q.includes("email") ||
-            q.includes("hire")||
-            q.includes("reach")||
-            q.includes("message")
-        ) {
-
-            return "You can contact Fernandes through the contact form or email him directly at lilfandy2.0@gmail.com.";
-
-        }
-
-
-        if (
-            q.includes("who") ||
-            q.includes("about") ||
-            q.includes("fernandes")
-        ) {
-
-            return "Fernandes is a developer and creative problem solver interested in web development, design, AI, IoT and practical technology solutions.";
-
-        }
-
-
-        if (
-            q.includes("location") ||
-            q.includes("where")
-        ) {
-
-            return "Fernandes is based in Nairobi, Kenya.";
-
-        }
-
-
-        if (
-            q.includes("hello") ||
-            q.includes("hi") ||
-            q.includes("hey")||
-            q.includes("yo") ||
-            q.includes("greetings") ||
-            q.includes("sup") ||
-            q.includes("what's up")
-        ) {
-
-            return "Hey! Ask me about Fernandes' skills, projects, experience or contact information.";
-
-        }
-
-
-        return "I can currently answer questions about Fernandes, his skills, projects, technologies, location and contact information.";
-
+        return matchedRule ? matchedRule.response : "I can currently answer questions about Fernandes, his skills, projects, technologies, location and contact information.";
     }
 
 
