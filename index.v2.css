@@ -181,6 +181,14 @@ button {
     color: var(--text);
 }
 
+.theme-toggle-icon {
+    transition: transform 420ms ease;
+}
+
+.theme-toggle-icon.is-rotated {
+    transform: rotate(180deg);
+}
+
 .icon-button:hover {
     transform: translateY(-2px);
 

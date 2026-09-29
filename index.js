@@ -40,7 +40,7 @@ const projects = [
     {
         title: "Cvnalyser",
         description: "CV Analyser is a recruitment-support webapp. Recruiters enter a job's requirements, upload a batch of PDF CVs, and receive AI-assisted candidate assessments, ranking and recommendation without bias.",
-        image: "myimages/rp.jpeg",
+        image: "myimages/cvnalyserr.jpeg",
         alt: "Cvnalyser project",
         tags: ["JavaScript", "HTML5", "CSS3", "NodeJS"],
         href: "#",
@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const html = document.documentElement;
 const themeToggle = document.getElementById("theme-toggle");
+const themeIcon = themeToggle?.querySelector(".theme-toggle-icon");
 
 const savedTheme = localStorage.getItem("portfolio-theme");
 
@@ -126,9 +127,6 @@ function setTheme(theme) {
     localStorage.setItem("portfolio-theme", theme);
 
     if (themeToggle) {
-
-        themeToggle.textContent =
-            theme === "dark" ? "☀️" : "🌙";
 
         themeToggle.setAttribute(
             "aria-label",
@@ -163,6 +161,8 @@ if (savedTheme) {
 }
 
 themeToggle?.addEventListener("click", () => {
+
+    themeIcon?.classList.toggle("is-rotated");
 
     const current =
         html.getAttribute("data-theme");
