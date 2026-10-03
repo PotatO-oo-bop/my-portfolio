@@ -21,7 +21,10 @@
 <meta name="twitter:description" content="I'm Fernandes, an 18-year-old developer in Nairobi building websites, Arduino smart systems, and clean UI/UX designs. Specializing in software and hardware, JavaScript, and IoT.">
 
 <link rel="icon" type="image/jpeg" href="myimages/flogo_nobg.png">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">   
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Source+Code+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <link rel="stylesheet" href="index.v2.css">
     <link rel="stylesheet" href="carousel.v2.css">
@@ -46,12 +49,14 @@
 
 <body>
 
+<div class="hero-galaxy" id="hero-galaxy" aria-hidden="true"></div>
+
 <!-- ========================= HEADER ========================= -->
 
 <header class="header">
 
     <a href="#home" class="logo" aria-label="Fernandes N home">
-        < Fern<span class="name-logo">andes/></span>
+    Fernandes<span class="name-logo">/<span class="logo-cursor" aria-hidden="true">_</span></span>
     </a>
 
     <nav class="nav" id="main-nav" aria-label="Main navigation">
@@ -82,7 +87,7 @@
             aria-label="Open AI assistant"
             title="AI Assistant"
         >
-            <i class="fas fa-microchip" aria-hidden="true"></i>
+            <i class="fas fa-brain" aria-hidden="true"></i>
         </button>
 
         <button
@@ -109,8 +114,8 @@
 
     <div class="hero-content">
       <h1>
-    Building ideas into
-    <span class="chameleon-text">digital experiences.</span>
+    Turning ideas into
+    <span class="chameleon-text">polished digital experiences.</span>
        </h1>
         
 
@@ -394,7 +399,7 @@ developer.<span class="code-blue">create</span>();</code></pre>
             </article>
             <article class="carousel-item" style="--position: 6;">
                 <img src="myimages/ai.png" alt="AI icon">
-                <span>AI</span>
+                <span>AI p</span>
             </article>
             <article class="carousel-item" style="--position: 7;">
                 <img src="myimages/iot.jpg" alt="Internet of Things illustration">
@@ -410,7 +415,7 @@ developer.<span class="code-blue">create</span>();</code></pre>
             </article>
             <article class="carousel-item" style="--position: 10;">
                 <img src="myimages/arduino portfolio.jpg" alt="Embedded systems illustration">
-                <span>Embedded</span>
+                <span>Arduino</span>
             </article>
         </div>
     </div>
@@ -676,6 +681,8 @@ developer.<span class="code-blue">create</span>();</code></pre>
 
 <div id="toast" class="toast hidden" aria-live="polite" aria-atomic="true"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script src="galaxy.js"></script>
 <script src="index.js"></script>
 
 </body>
