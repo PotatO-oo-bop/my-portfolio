@@ -69,6 +69,17 @@ const projects = [
         buttonText: "Details",
         buttonIcon: "fa-arrow-right",
         disabled: true
+    },
+    {
+        title: "Sonar — Username Lookup",
+        description: "An OSINT tool for checking a username across online platforms.",
+        image: "myimages/sonar.jpeg",
+        alt: "Sonar username lookup tool",
+        tags: ["JavaScript", "Fetch API", "HTML5", "CSS3"],
+        href: "https://potato-oo-bop.github.io/sonar-osint/",
+        buttonText: "Open Sonar",
+        buttonIcon: "fa-arrow-up-right-from-square",
+        disabled: false
     }
 ];
 
@@ -404,8 +415,12 @@ themeToggle?.addEventListener("click", () => {
             response: "Fernandes works with JavaScript, HTML, CSS, UI/UX design, graphics design, AI prompting, IoT, Arduino, OSINT and practical problem solving."
         },
         {
+            keywords: ["sonar", "username lookup", "username search"],
+            response: "Sonar is Fernandes' OSINT username lookup project. Try it here: https://potato-oo-bop.github.io/sonar-osint/"
+        },
+        {
             keywords: ["project", "projects", "built", "work", "portfolio"],
-            response: "Current portfolio projects include ResPos, a minimalist Todo application, Rock Paper Scissors, and a smart Arduino-based plant irrigation system."
+            response: "Portfolio projects include Sonar — Username Lookup, ResPos, CV Analyser, a Todo app, Rock Paper Scissors, and a smart Arduino-based irrigation system. Sonar is live at https://potato-oo-bop.github.io/sonar-osint/."
         },
         {
             keywords: ["contact", "email", "hire", "reach", "message"],
